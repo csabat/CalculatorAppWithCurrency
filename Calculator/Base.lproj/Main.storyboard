@@ -1,24 +1,408 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-Bold</string>
+            <string>AvenirNext-Medium</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARM-oG-QCc">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fIA-Ql-Np1">
+                                        <rect key="frame" x="80" y="15" width="334" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="FJ6-Ho-RuT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="50"/>
+                                        <color key="textColor" red="0.99779901650000002" green="0.99779901650000002" blue="0.99779901650000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </label>
+                                    <textField hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="AUD" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ycJ-9c-tF2">
+                                        <rect key="frame" x="0.0" y="15" width="80" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="WR3-dk-R7I"/>
+                                            <constraint firstAttribute="width" constant="80" id="abJ-5p-KWE"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="30"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="E7B-Ud-GrB"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ycJ-9c-tF2" secondAttribute="bottom" id="2WC-cs-37q"/>
+                                    <constraint firstAttribute="height" constant="80" id="Crs-VF-LJy"/>
+                                    <constraint firstAttribute="trailing" secondItem="fIA-Ql-Np1" secondAttribute="trailing" id="E1Q-OM-0Jk"/>
+                                    <constraint firstItem="ycJ-9c-tF2" firstAttribute="leading" secondItem="ARM-oG-QCc" secondAttribute="leading" id="W9y-V8-9hx"/>
+                                    <constraint firstAttribute="bottom" secondItem="fIA-Ql-Np1" secondAttribute="bottom" id="fLN-Dk-KzQ"/>
+                                    <constraint firstItem="fIA-Ql-Np1" firstAttribute="leading" secondItem="ycJ-9c-tF2" secondAttribute="trailing" id="fV1-Ww-8ei"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Wyf-P8-Lfc">
+                                <rect key="frame" x="0.0" y="96" width="414" height="640"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MS6-He-zwz">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                                        <subviews>
+                                            <textField hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="HUF" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bO7-3N-vyq">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="32l-nu-mN0"/>
+                                                </constraints>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="30"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="2yj-7E-b8A"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="32" translatesAutoresizingMaskIntoConstraints="NO" id="qpk-cO-bYr">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="120" id="res-1F-0bz"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="75"/>
+                                                <color key="textColor" red="0.99779901650000002" green="0.99779901650000002" blue="0.99779901650000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="xyQ-X5-CB7">
+                                        <rect key="frame" x="0.0" y="120" width="414" height="520"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="TaU-e1-xma">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="99.333333333333314"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ug-Hq-WXj" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.0" green="0.6910889911253808" blue="0.12688860861034904" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="AC">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="20o-Mt-I9N"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrd-Eq-7T6" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="105" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.0" green="0.6910889911253808" blue="0.12688860861034904" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="+/-">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EWx-Z6-7Bg"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vX0-Sr-7bn" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="210" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.0" green="0.6910889911253808" blue="0.12688860861034904" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="%">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fbb-5C-4by"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jD9-Xd-0kH" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="315" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.0521517828278968" green="0.42409397581577907" blue="0.74916719543147203" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="/">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="836-KL-pJq"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="PI4-fm-JQi">
+                                                <rect key="frame" x="0.0" y="105.33333333333331" width="414" height="99"/>
+                                                <subviews>
+                                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xfa-y3-vAK" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="7">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FxG-HX-cGs"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHA-5T-pLb" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="105" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="8">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F66-Hl-XEf"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvk-K0-Mov" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="210" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="9">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="djJ-rJ-43h"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PJL-jJ-raz" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="315" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.0521517828278968" green="0.42409397581577907" blue="0.74916719543147203" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="X">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MkH-ea-ZNd"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="dKr-Yr-2Ji">
+                                                <rect key="frame" x="0.0" y="210.33333333333334" width="414" height="99.333333333333286"/>
+                                                <subviews>
+                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2h-dh-bqC" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="4">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nuZ-jl-P0d"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cti-Od-X8y" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="105" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="5">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jkc-gq-IoL"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTg-SC-Npi" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="210" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="6">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3DL-6h-zwM"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zzb-Qh-cC5" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="315" y="0.0" width="99" height="99.333333333333314"/>
+                                                        <color key="backgroundColor" red="0.0521517828278968" green="0.42409397581577907" blue="0.74916719543147203" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="-">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rnn-V5-onR"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="FEh-np-ebs">
+                                                <rect key="frame" x="0.0" y="315.66666666666663" width="414" height="99"/>
+                                                <subviews>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KWO-gG-xyg" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="1">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eKJ-Jq-Kwk"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTu-jj-HnS" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="105" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="2">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OJR-Zk-IOg"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YbC-UM-Fzq" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="210" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="3">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gbE-7x-07f"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SkX-00-Cgq" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="315" y="0.0" width="99" height="99"/>
+                                                        <color key="backgroundColor" red="0.0521517828278968" green="0.42409397581577907" blue="0.74916719543147203" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="+">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aOd-qL-eZF"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="N0w-WF-xLQ">
+                                                <rect key="frame" x="0.0" y="420.66666666666663" width="414" height="99.333333333333371"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkW-1Z-ELy" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="99" height="99.333333333333371"/>
+                                                        <color key="backgroundColor" red="0.6910889911253808" green="0.52432699265487148" blue="0.26256938738955637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="₤$">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="currencyBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gWV-Vn-da3"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3s-Mv-JfK" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="105" y="0.0" width="99" height="99.333333333333371"/>
+                                                        <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="0">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vNe-fI-A6r"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2n6-US-4nT" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="210" y="0.0" width="99" height="99.333333333333371"/>
+                                                        <color key="backgroundColor" red="0.76470588240000004" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title=".">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="numberBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I15-p1-bbe"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8W-aS-qpg" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
+                                                        <rect key="frame" x="315" y="0.0" width="99" height="99.333333333333371"/>
+                                                        <color key="backgroundColor" red="0.0521517828278968" green="0.42409397581577907" blue="0.74916719543147203" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
+                                                        <state key="normal" title="=">
+                                                            <color key="titleColor" red="0.99779901649746194" green="0.99779901649746194" blue="0.99779901649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="operationBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GH5-52-26P"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <variation key="heightClass=compact-widthClass=compact" axis="vertical"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20122144670050757" green="0.20122144670050757" blue="0.20122144670050757" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Wyf-P8-Lfc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4gl-vq-tde"/>
+                            <constraint firstItem="Wyf-P8-Lfc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Hpv-gv-0Ct"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Wyf-P8-Lfc" secondAttribute="bottom" id="QQE-Nb-2jj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Wyf-P8-Lfc" secondAttribute="trailing" id="SJ5-lM-Apy"/>
+                            <constraint firstItem="Wyf-P8-Lfc" firstAttribute="top" secondItem="ARM-oG-QCc" secondAttribute="bottom" constant="16" id="UgA-5w-aVb"/>
+                            <constraint firstItem="ARM-oG-QCc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="YHH-Fg-Wwa"/>
+                            <constraint firstItem="ARM-oG-QCc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="etg-J3-uA6"/>
+                            <constraint firstItem="Wyf-P8-Lfc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="evn-v7-8qk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Wyf-P8-Lfc" secondAttribute="bottom" id="geM-nJ-mB9"/>
+                            <constraint firstItem="ARM-oG-QCc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vsD-5L-RFH"/>
+                            <constraint firstItem="ARM-oG-QCc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="zV0-5O-3eq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Wyf-P8-Lfc" secondAttribute="trailing" id="zsI-7S-HVi"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="QQE-Nb-2jj"/>
+                                <exclude reference="SJ5-lM-Apy"/>
+                                <exclude reference="geM-nJ-mB9"/>
+                                <exclude reference="zsI-7S-HVi"/>
+                                <exclude reference="4gl-vq-tde"/>
+                                <exclude reference="Hpv-gv-0Ct"/>
+                                <exclude reference="evn-v7-8qk"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="QQE-Nb-2jj"/>
+                                <include reference="zsI-7S-HVi"/>
+                                <include reference="Hpv-gv-0Ct"/>
+                                <include reference="evn-v7-8qk"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="SJ5-lM-Apy"/>
+                                <include reference="geM-nJ-mB9"/>
+                                <include reference="4gl-vq-tde"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="addedCurrencyField" destination="ycJ-9c-tF2" id="gDP-Bs-d6S"/>
+                        <outlet property="calcCurrencyField" destination="bO7-3N-vyq" id="iMg-dJ-s8j"/>
+                        <outlet property="currencyTextLabel" destination="fIA-Ql-Np1" id="7Wr-WY-K5W"/>
+                        <outlet property="currencyView" destination="ARM-oG-QCc" id="XjR-4L-vCU"/>
+                        <outlet property="currencyViewHeight" destination="Crs-VF-LJy" id="Snf-Of-abd"/>
+                        <outlet property="resultTextLabel" destination="qpk-cO-bYr" id="Mm4-Dq-TJP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
         </scene>
     </scenes>
 </document>

@@ -1,5 +1,5 @@
 //
-//  Operands.swift
+//  Operation.swift
 //  Calculator
 //
 //  Created by admin on 20/10/2017.
@@ -8,9 +8,11 @@
 
 import Foundation
 
-enum Operands {
-    case add
-    case subtract
-    case multiple
-    case devision
+enum OperationType {
+    case modification((Double) -> Double)
+    case operation((Double,Double) -> Double)
+    case reset
+    case equal
 }
+
+

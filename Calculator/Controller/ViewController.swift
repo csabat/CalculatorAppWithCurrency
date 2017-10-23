@@ -10,163 +10,223 @@ import UIKit
 
 class ViewController: UIViewController {
     // Outlets
+    @IBOutlet weak var currencyViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var currencyView: UIView!
     @IBOutlet weak var addedCurrencyField: UITextField!
     @IBOutlet weak var calcCurrencyField: UITextField!
     @IBOutlet weak var resultTextLabel: UILabel!
     @IBOutlet weak var currencyTextLabel: UILabel!
-    @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
-    
-    var calculatorLogic = CalculatorLogic()
-    var keysArray : [Any]?
-    var currentDisplayNumber : Double {
-        get {
-            return Double(resultTextLabel.text!)!
-        }
-        
-        set {
-            resultTextLabel.text = String(newValue).doubleFormatter()
-        }
-    }
-    
+    //vars
     var userIsTyping = false
     var constantConstraintValue : CGFloat!
+    var selectedTextField: UITextField?
+    var calculatorLogic = CalculatorLogic()
+    var keysArray : [String]?
+    var isCurrencyTapped = false
+    var rate: Double?
+    //binding data to the curremcy display
+    
+    
+    // Binding data to the displays labels 
+    var currentDisplayNumber : Double {
+        get {
+            if resultTextLabel.text == "nan" {
+                return 0
+            } else {
+            return Double(resultTextLabel.text!)!
+            }
+        }
+        set {
+            resultTextLabel.text = String(newValue).doubleFormatter()
+            if let rate = rate {
+                currencyTextLabel.text = String(getCurrencyValue(currentValue: currentDisplayNumber, rate: rate))
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //constantConstraintValue = stackViewTopConstraint.constant
-        var _ = DataService.instance.fetchDataFromServer(key: "AUD")
-        //put THem in currencyBUtton pressed
-        setupCurrencyFields()
-        //createToolBar(to: calcCurrencyField)
-        
-        
-    }
-    func setupCurrencyFields() {
-        calcCurrencyField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        calcCurrencyField.textAlignment = NSTextAlignment.center
-        addedCurrencyField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        addedCurrencyField.textAlignment = NSTextAlignment.center
+        currencyViewHeight.constant = 0.0
+        keysArray = DataService.instance.getKeysArray()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateRateValue), name: RATE_READY, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorMessage), name: ERROR_FETCHING_RATES, object: nil)
     }
 
+    
+    //Observers func
+    @objc func updateRateValue() {
+        rate = DataService.instance.actualRate
+        updateLabel()
+    }
+    //Handling Errors in case there is no connection
+    @objc func showErrorMessage() {
+        
+        
+    }
+    
+    //Binding currency real time
+    func updateLabel() {
+        let newNumber = getCurrencyValue(currentValue: currentDisplayNumber, rate: rate!)
+        DispatchQueue.main.async {
+            self.currencyTextLabel.text = String(newNumber).doubleFormatter()
+        }
+    }
+
+    func getCurrencyValue(currentValue: Double, rate: Double) -> Double {
+        let value = currentValue * rate
+        let roundedValue = Double(round(1000*value)/1000)
+        return roundedValue
+    }
+    
     @IBAction func numberBtnPressed(_ sender: CalculatorButton) {
         sender.animatedTouch()
         let number = sender.currentTitle!
         if userIsTyping == true {
-            resultTextLabel.text = resultTextLabel.text! + number
+            if resultTextLabel.text!.count > 9 {
+            } else {
+                resultTextLabel.text = resultTextLabel.text! + number
+            }
+            if let rate = rate {
+                currencyTextLabel.text = String(getCurrencyValue(currentValue: currentDisplayNumber, rate: rate))
+            }
         } else {
+            
             resultTextLabel.text = number
+            if let rate = rate {
+                currencyTextLabel.text = String(getCurrencyValue(currentValue: currentDisplayNumber, rate: rate))
+            }
             userIsTyping = true
         }
-        
     }
-    
-    
+
     @IBAction func operationBtnPressed(_ sender: CalculatorButton) {
+        sender.animatedTouch()
         userIsTyping = false
         calculatorLogic.setValue(newValue: currentDisplayNumber)
         guard let symbol = sender.currentTitle else {return}
         calculatorLogic.performResult(symbol)
         currentDisplayNumber = calculatorLogic.getValue()
         
-        
-        
     }
-    
-    @IBAction func equalBtnPressed(_ sender: UIButton) {
-        
-        
-    }
-    
-    
-    @IBAction func acBtnPressed(_ sender: Any) {
-        
-    }
-    
-    var isCurrencyTapped = false
-    
+  
     @IBAction func currencyBtnPressed(_ sender: Any) {
-        triggerConstrint()
+        currencyViewAimating()
+        setupCurrencyFields()
+        createCurrencyPicker(to: calcCurrencyField)
+        createCurrencyPicker(to: addedCurrencyField)
     }
     
-    
-//    var selectedTextField: UITextField = UITextField()
-//    //to textfield: UITextField
-//    func createCurrencyPicker() {
-//        //selectedTextField = textfield
-//
-//        let currencyPicker = UIPickerView()
-//        currencyPicker.delegate = self
-//
-//
-//        calcCurrencyField.inputView = currencyPicker
-//    }
-//    //to textfield: UITextField
-//    func createToolBar() {
-//        let toolbar = UIToolbar()
-//        toolbar.sizeToFit()
-//
-//        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(ViewController.dismissToolbar))
-//
-//        toolbar.setItems([doneButton], animated: false)
-//        toolbar.isUserInteractionEnabled = true
-//
-//        calcCurrencyField.inputAccessoryView = toolbar
-//
-//    }
-//
-//    @objc func dismissToolbar() {
-//        view.endEditing(true)
-//    }
-    
-    
-    
-    func triggerConstrint() {
-        self.view.layoutIfNeeded()
+    func currencyViewAimating() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.stackViewTopConstraint.constant = self.isCurrencyTapped ? self.constantConstraintValue : self.currencyTextLabel.frame.size.height
-            
+            self.currencyViewHeight.constant = self.isCurrencyTapped ? 0.0 : 100.0
             self.view.layoutIfNeeded()
         }) { (success) in
             UIView.animate(withDuration: 0.3, animations: {
-                self.currencyTextLabel.alpha = self.isCurrencyTapped ?  0 : 1
+                self.currencyLabelVisible(self.isCurrencyTapped)
+                self.isCurrencyTapped = self.isCurrencyTapped ? false : true
+                DataService.instance.fetchDataFromServer(calcKey: self.calcCurrencyField.text!, addedKey: self.addedCurrencyField.text!)
             })
-            
-            self.isCurrencyTapped = self.isCurrencyTapped ? false : true
         }
-        
-//        UIView.animate(withDuration: 0.3, animations: {
-
-//            self.view.layoutIfNeeded()
-//        }) { (success) in
-//            UIView.animate(withDuration: 0.3, animations: {
-//                self.currencyTextLabel.alpha = 1
-//            })
-//            self.isCurrencyTapped = self.isCurrencyTapped ? false : true
-//        }
     }
     
+    func setupCurrencyFields() {
+        calcCurrencyField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        calcCurrencyField.textAlignment = NSTextAlignment.center
+        addedCurrencyField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        addedCurrencyField.textAlignment = NSTextAlignment.center
+    }
+    
+    func currencyLabelVisible(_ visible: Bool) {
+        if visible {
+            addedCurrencyField.isHidden = true
+            calcCurrencyField.isHidden = true
+            addedCurrencyField.alpha = 0
+            calcCurrencyField.alpha = 0
+        } else {
+            addedCurrencyField.isHidden = false
+            calcCurrencyField.isHidden = false
+            addedCurrencyField.alpha = 1
+            calcCurrencyField.alpha = 1
+            currencyTextLabel.isHidden = false
+            currencyTextLabel.alpha = 1
+        }
+    }
 
+    func createCurrencyPicker(to textfield: UITextField) {
+        let currencyPicker = UIPickerView()
+        currencyPicker.delegate = self
+        currencyPicker.dataSource = self
+        
+        textfield.inputView = currencyPicker
+        currencyPicker.backgroundColor = #colorLiteral(red: 0.2006070614, green: 0.2007901967, blue: 0.2006354332, alpha: 1)
+        createToolBar(to: textfield)
+    }
+    
+    func createToolBar(to textfield: UITextField) {
+        print("creating toolbar")
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        toolbar.barTintColor = .black
+        toolbar.tintColor = .white
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(ViewController.dismissToolbar))
+        
+        toolbar.setItems([doneButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        
+        textfield.inputAccessoryView = toolbar
+    }
+    
+    @objc func dismissToolbar() {
+        DataService.instance.fetchDataFromServer(calcKey: calcCurrencyField.text!, addedKey: addedCurrencyField.text!)
+        view.endEditing(true)
+    }
+    
 }
 
-//extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-//    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        guard let array = keysArray else {return 1}
-//        return array.count
-//    }
-//
-//    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        guard let array = keysArray else {return ""}
-//        return array[row] as? String
-//    }
-//
-//    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        guard let array = keysArray else {return}
-//        selectedTextField.text = array[row] as? String
-//    }
-//
-//}
-//
+// UIPickerView
+extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return keysArray?.count ?? 1
+    }
+    
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return keysArray?[row] ?? ""
+    }
+    
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if let selectedTextfield = selectedTextField {
+            selectedTextfield.text = keysArray?[row]
+            
+            
+        }
+    }
+    
+    //Custom rows
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var label: UILabel
+        if let view = view as? UILabel {
+            label = view
+        } else {
+            label = UILabel()
+        }
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont(name: "Avenir-Medium", size: 30.0)
+        label.text = keysArray?[row]
+        return label
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        selectedTextField = textField
+    }
+    
+    
+}
+
+
+
 
