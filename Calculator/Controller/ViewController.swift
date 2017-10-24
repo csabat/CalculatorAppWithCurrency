@@ -33,13 +33,17 @@ class ViewController: UIViewController {
             if resultTextLabel.text == "nan" {
                 return 0
             } else {
-            return Double(resultTextLabel.text!)!
+                if let resultlLabelValue = Double(resultTextLabel.text!) {
+                    return resultlLabelValue
+                } else {
+                    return 0
+                }
             }
         }
         set {
             resultTextLabel.text = String(newValue).doubleFormatter()
             if let rate = rate {
-                currencyTextLabel.text = String(getCurrencyValue(currentValue: currentDisplayNumber, rate: rate))
+                currencyTextLabel.text = String(getCurrencyValue(currentValue: currentDisplayNumber, rate: rate)).doubleFormatter()
             }
         }
     }
